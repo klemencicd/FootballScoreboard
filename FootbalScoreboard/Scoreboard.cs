@@ -1,11 +1,19 @@
-﻿namespace FootbalScoreboard;
+﻿using FootbalScoreboard.Exceptions;
+
+namespace FootbalScoreboard;
 
 public class Scoreboard
 {
-    private List<Match> _matches = [];
+    private readonly List<Match> _matches = [];
 
     public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {
+        if (_matches.Any(x => x.HomeTeam.Equals(homeTeam) || x.AwayTeam.Equals(homeTeam)))
+            throw new ScoreboardException($"Team {homeTeam} cannot start this match because they are already playing.");
+
+        if (_matches.Any(x => x.HomeTeam.Equals(awayTeam) || x.AwayTeam.Equals(awayTeam)))
+            throw new ScoreboardException($"Team {awayTeam} cannot start this match because they are already playing.");
+
         Match match = new(homeTeam, awayTeam, matchStartTime);
         _matches.Add(match);
     }
