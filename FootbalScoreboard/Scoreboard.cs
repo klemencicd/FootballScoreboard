@@ -20,4 +20,9 @@ public class Scoreboard
     {
         return _matches;
     }
+
+    public void FinishMatch(string homeTeam, string awayTeam)
+    {
+        throw new NotImplementedException();
+    }
 }

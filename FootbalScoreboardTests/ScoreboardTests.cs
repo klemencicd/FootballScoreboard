@@ -38,4 +38,16 @@ public class ScoreboardTests()
         Assert.Equal(awayTeam, matches[0].AwayTeam);
         Assert.Equal(5, matches[0].AwayTeamScore);
     }
+
+    [Theory]
+    [InlineData("Mexico", "Canada")]
+    public void FinishMatch_ShouldRemoveMatchFromScoreboard(string homeTeam, string awayTeam)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        _scoreboard.FinishMatch(homeTeam, awayTeam);
+        List<Match> matches = _scoreboard.GetMatches();
+
+        Assert.Empty(matches);
+    }
 }
