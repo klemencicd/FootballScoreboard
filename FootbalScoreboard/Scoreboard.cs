@@ -23,6 +23,10 @@ public class Scoreboard
 
     public void FinishMatch(string homeTeam, string awayTeam)
     {
-        throw new NotImplementedException();
+        Match? match = _matches.SingleOrDefault(x => x.HomeTeam.Equals(homeTeam) && x.AwayTeam.Equals(awayTeam));
+        if (match != null)
+        {
+            _matches.Remove(match);
+        }
     }
 }
