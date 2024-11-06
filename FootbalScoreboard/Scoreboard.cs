@@ -10,6 +10,11 @@ public class Scoreboard
         _matches.Add(match);
     }
 
+    public void UpdateScore(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
+    {
+        Match? match = _matches.SingleOrDefault(x => x.HomeTeam.Equals(homeTeam) && x.AwayTeam.Equals(awayTeam));
+    }
+
     public List<Match> GetMatches()
     {
         return _matches;
