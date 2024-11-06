@@ -16,11 +16,6 @@ public class Scoreboard
         match?.UpdateScore(homeTeamScore, awayTeamScore);
     }
 
-    public List<Match> GetMatches()
-    {
-        return _matches;
-    }
-
     public void FinishMatch(string homeTeam, string awayTeam)
     {
         Match? match = _matches.SingleOrDefault(x => x.HomeTeam.Equals(homeTeam) && x.AwayTeam.Equals(awayTeam));
@@ -28,5 +23,13 @@ public class Scoreboard
         {
             _matches.Remove(match);
         }
+    }
+
+    public List<Match> GetMatches()
+    {
+        return _matches
+            .OrderByDescending(x => x.HomeTeamScore + x.AwayTeamScore)
+            .ThenByDescending(x => x.StartTime)
+            .ToList();
     }
 }
