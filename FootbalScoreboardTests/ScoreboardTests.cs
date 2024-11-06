@@ -1,4 +1,5 @@
 using FootbalScoreboard;
+using FootbalScoreboard.Exceptions;
 using Xunit.Sdk;
 
 namespace FootbalScoreboardTests;
@@ -21,6 +22,16 @@ public class ScoreboardTests()
         Assert.Equal(awayTeam, matches[0].AwayTeam);
         Assert.Equal(0, matches[0].AwayTeamScore);
         Assert.Equal(matchStartTime, matches[0].StartTime);
+    }
+
+    [Theory]
+    [InlineData("Mexico", "Italy")]
+    public void StartMatch_ShouldThrowExceptionIfTeamIsAlreadyPlaying(string homeTeam, string awayTeam)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime));
+        Assert.Equal("Team Mexico cannot start this match because they are already playing.", exception.Message);
     }
 
     [Theory]
