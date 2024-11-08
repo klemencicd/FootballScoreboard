@@ -1,8 +1,7 @@
-﻿using FootbalScoreboard;
-using FootbalScoreboard.Interfaces;
-using FootbalScoreboard.Repositories;
+﻿using FootballScoreboard;
+using FootballScoreboard.Repositories;
 
-namespace FootbalScoreboardTests;
+namespace FootballScoreboardTests;
 public class MatchRepositoryTests
 {
     private readonly MatchRepository _matchRepository = new();
@@ -12,7 +11,7 @@ public class MatchRepositoryTests
     public void Add_ShouldStartNewMatch_WithInitialScoreZero(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime); 
+        Match match = new(homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         List<Match> matches = _matchRepository.GetAllActive();
 
@@ -99,7 +98,7 @@ public class MatchRepositoryTests
     }
 
     [Fact]
-    public void GetAllActive_ShouldReturnEmptyList_IfThereAreNoMatches()
+    public void GetAllActive_ShouldReturnEmptyList_IfNoMatches()
     {
         List<Match> matches = _matchRepository.GetAllActive();
 

@@ -1,10 +1,10 @@
-using FootbalScoreboard;
-using FootbalScoreboard.Exceptions;
-using FootbalScoreboard.Interfaces;
+using FootballScoreboard;
+using FootballScoreboard.Exceptions;
+using FootballScoreboard.Interfaces;
 using Moq;
-using Match = FootbalScoreboard.Match;
+using Match = FootballScoreboard.Match;
 
-namespace FootbalScoreboardTests;
+namespace FootballScoreboardTests;
 
 public class ScoreboardTests
 {

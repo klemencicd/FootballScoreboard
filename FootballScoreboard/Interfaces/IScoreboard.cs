@@ -1,4 +1,6 @@
-﻿namespace FootbalScoreboard.Interfaces;
+﻿using FootballScoreboard;
+
+namespace FootballScoreboard.Interfaces;
 public interface IScoreboard
 {
     void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime);

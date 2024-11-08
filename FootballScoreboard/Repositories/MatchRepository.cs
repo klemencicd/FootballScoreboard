@@ -1,8 +1,9 @@
-﻿using FootbalScoreboard.Interfaces;
+﻿using FootballScoreboard;
+using FootballScoreboard.Interfaces;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("FootbalScoreboardTests")]
-namespace FootbalScoreboard.Repositories;
+[assembly: InternalsVisibleTo("FootballScoreboardTests")]
+namespace FootballScoreboard.Repositories;
 internal class MatchRepository : IMatchRepository
 {
     private readonly List<Match> _matches = [];

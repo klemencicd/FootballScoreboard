@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootbalScoreboard", "FootbalScoreboard.csproj", "{D952609A-5D7E-451E-AA99-63C3AA780648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballScoreboard", "FootballScoreboard.csproj", "{D952609A-5D7E-451E-AA99-63C3AA780648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FootbalScoreboardTests", "..\FootbalScoreboardTests\FootbalScoreboardTests.csproj", "{9AECE5AA-46A2-490E-A59D-4459CCA09A17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FootballScoreboardTests", "..\FootballScoreboardTests\FootballScoreboardTests.csproj", "{9AECE5AA-46A2-490E-A59D-4459CCA09A17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

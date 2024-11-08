@@ -1,4 +1,6 @@
-﻿namespace FootbalScoreboard.Interfaces;
+﻿using FootballScoreboard;
+
+namespace FootballScoreboard.Interfaces;
 public interface IMatchRepository
 {
     void Add(Match match);

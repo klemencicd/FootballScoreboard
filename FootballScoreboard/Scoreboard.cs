@@ -1,11 +1,11 @@
-﻿using FootbalScoreboard.Exceptions;
-using FootbalScoreboard.Interfaces;
+﻿using FootballScoreboard.Interfaces;
+using FootballScoreboard.Exceptions;
 
-namespace FootbalScoreboard;
+namespace FootballScoreboard;
 
 public class Scoreboard(IMatchRepository _matchRepository) : IScoreboard
 {
-    private readonly List<Match> _matches = _matchRepository.GetAllActiveMatches();
+    private readonly List<Match> _matches = _matchRepository.GetAllActive();
 
     public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {

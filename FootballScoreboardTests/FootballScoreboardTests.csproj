@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FootbalScoreboard\FootbalScoreboard.csproj" />
+    <ProjectReference Include="..\FootballScoreboard\FootballScoreboard.csproj" />
   </ItemGroup>
 
   <ItemGroup>
