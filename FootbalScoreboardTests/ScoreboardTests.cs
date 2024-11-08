@@ -51,7 +51,7 @@ public class ScoreboardTests()
     }
 
     [Theory]
-    [InlineData("Mexico", "Canada", 0, 5)]
+    [InlineData("Mexico", "Canada", -1, 5)]
     public void UpdateScore_ShouldThrowExceptionIfScoreIsNegativeNumber(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
