@@ -1,12 +1,20 @@
 using FootbalScoreboard;
 using FootbalScoreboard.Exceptions;
-using Xunit.Sdk;
+using FootbalScoreboard.Interfaces;
+using Moq;
+using Match = FootbalScoreboard.Match;
 
 namespace FootbalScoreboardTests;
 
-public class ScoreboardTests()
+public class ScoreboardTests
 {
-    private readonly Scoreboard _scoreboard = new();
+    private readonly Mock<IMatchRepository> _matchRepositoryMock = new();
+    private readonly Scoreboard _scoreboard;
+
+    public ScoreboardTests()
+    {
+        _scoreboard = new(_matchRepositoryMock.Object);
+    }
 
     [Theory]
     [InlineData("Mexico", "Canada")]

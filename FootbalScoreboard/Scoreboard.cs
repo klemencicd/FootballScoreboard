@@ -3,9 +3,9 @@ using FootbalScoreboard.Interfaces;
 
 namespace FootbalScoreboard;
 
-public class Scoreboard : IScoreboard
+public class Scoreboard(IMatchRepository _matchRepository) : IScoreboard
 {
-    private readonly List<Match> _matches = [];
+    private readonly List<Match> _matches = _matchRepository.GetAllActiveMatches();
 
     public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {
