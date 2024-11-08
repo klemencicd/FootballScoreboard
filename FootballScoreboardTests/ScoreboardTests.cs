@@ -2,7 +2,6 @@ using FootballScoreboard.Exceptions;
 using FootballScoreboard.Interfaces;
 using FootballScoreboard.Models;
 using Moq;
-using System.Text.RegularExpressions;
 using Match = FootballScoreboard.Models.Match;
 
 namespace FootballScoreboardTests;
