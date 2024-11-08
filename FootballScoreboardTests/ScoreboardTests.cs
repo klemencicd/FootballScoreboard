@@ -2,6 +2,7 @@ using FootballScoreboard.Exceptions;
 using FootballScoreboard.Interfaces;
 using FootballScoreboard.Models;
 using Moq;
+using System.Text.RegularExpressions;
 using Match = FootballScoreboard.Models.Match;
 
 namespace FootballScoreboardTests;
@@ -70,11 +71,11 @@ public class ScoreboardTests
     public void FinishMatch_ShouldRemoveMatchFromScoreboard(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+        _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(match);
         _scoreboard.FinishMatch(homeTeam, awayTeam);
-        List<Match> matches = _scoreboard.GetMatches();
-
-        Assert.Empty(matches);
+        _matchRepositoryMock.Verify(r => r.Remove(match), Times.Once);
     }
 
     [Fact]
