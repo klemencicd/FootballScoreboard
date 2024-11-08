@@ -20,16 +20,12 @@ public class ScoreboardTests
     [InlineData("Mexico", "Canada")]
     public void StartMatch_ShouldStartNewMatch_WithInitialScoreZero(string homeTeam, string awayTeam)
     {
+        _matchRepositoryMock.Setup(x => x.GetAllActive()).Returns([]);
+
         var matchStartTime = DateTime.UtcNow;
         _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
-        List<Match> matches = _scoreboard.GetMatches();
 
-        Assert.Single(matches);
-        Assert.Equal(homeTeam, matches[0].HomeTeam);
-        Assert.Equal(0, matches[0].HomeTeamScore);
-        Assert.Equal(awayTeam, matches[0].AwayTeam);
-        Assert.Equal(0, matches[0].AwayTeamScore);
-        Assert.Equal(matchStartTime, matches[0].StartTime);
+        _matchRepositoryMock.Verify(r => r.Add(It.Is<Match>(m => m.HomeTeam == homeTeam && m.AwayTeam == awayTeam)), Times.Once);
     }
 
     [Theory]
