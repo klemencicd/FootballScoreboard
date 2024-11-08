@@ -1,8 +1,9 @@
 ﻿using FootbalScoreboard.Exceptions;
+using FootbalScoreboard.Interfaces;
 
 namespace FootbalScoreboard;
 
-public class Scoreboard
+public class Scoreboard : IScoreboard
 {
     private readonly List<Match> _matches = [];
 
@@ -20,6 +21,9 @@ public class Scoreboard
 
     public void UpdateScore(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
+        if (homeTeamScore < 0 || awayTeamScore < 0)
+            throw new ScoreboardException("Score cannot be negative number.");
+
         Match? match = _matches.SingleOrDefault(x => x.HomeTeam.Equals(homeTeam) && x.AwayTeam.Equals(awayTeam));
         match?.UpdateScore(homeTeamScore, awayTeamScore);
     }
@@ -35,9 +39,8 @@ public class Scoreboard
 
     public List<Match> GetMatches()
     {
-        return _matches
+        return [.. _matches
             .OrderByDescending(x => x.HomeTeamScore + x.AwayTeamScore)
-            .ThenByDescending(x => x.StartTime)
-            .ToList();
+            .ThenByDescending(x => x.StartTime)];
     }
 }
