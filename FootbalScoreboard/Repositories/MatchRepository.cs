@@ -11,10 +11,8 @@ internal class MatchRepository : IMatchRepository
 
     public List<Match> GetAllActive() => _matches;
 
-    public Match? GetSingle(string homeTeam, string awayTeam)
-    {
-        throw new NotImplementedException();
-    }
+    public Match? GetSingle(string homeTeam, string awayTeam) => _matches.SingleOrDefault(
+        m => m.HomeTeam.Equals(homeTeam) && m.AwayTeam.Equals(awayTeam));
 
     public void Remove(Match match)
     {
