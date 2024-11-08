@@ -33,9 +33,10 @@ public class ScoreboardTests
     public void StartMatch_ShouldThrowExceptionIfTeamIsAlreadyPlaying(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        _matchRepositoryMock.Setup(x => x.GetAllActive()).Returns([new Match("Mexico", "Canada", matchStartTime)]);
         var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime));
-        Assert.Equal("Team Mexico cannot start this match because they are already playing.", exception.Message);
+        Assert.Equal("Match validation failed: Team Mexico is already in a match.", exception.Message);
+        _matchRepositoryMock.Verify(r => r.Add(It.Is<Match>(m => m.HomeTeam == homeTeam && m.AwayTeam == awayTeam)), Times.Never);
     }
 
     [Theory]
