@@ -9,7 +9,9 @@ internal class MatchRepository : IMatchRepository
 
     public void Add(Match match) => _matches.Add(match);
 
-    public List<Match> GetAllActive() => _matches;
+    public List<Match> GetAllActive() => [.. _matches
+            .OrderByDescending(x => x.HomeTeamScore + x.AwayTeamScore)
+            .ThenByDescending(x => x.StartTime)];
 
     public Match? GetSingle(string homeTeam, string awayTeam) => _matches.SingleOrDefault(
         m => m.HomeTeam.Equals(homeTeam) && m.AwayTeam.Equals(awayTeam));

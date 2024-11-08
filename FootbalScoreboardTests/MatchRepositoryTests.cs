@@ -73,12 +73,16 @@ public class MatchRepositoryTests
         _matchRepository.Add(match);
         match = new("Spain", "Brazil", matchStartTime.AddMinutes(1));
         match.UpdateScore(10, 2);
+        _matchRepository.Add(match);
         match = new("Germany", "France", matchStartTime.AddMinutes(2));
         match.UpdateScore(2, 2);
+        _matchRepository.Add(match);
         match = new("Uruguay", "Italy", matchStartTime.AddMinutes(3));
         match.UpdateScore(6, 6);
+        _matchRepository.Add(match);
         match = new("Argentina", "Australia", matchStartTime.AddMinutes(4));
         match.UpdateScore(3, 1);
+        _matchRepository.Add(match);
 
         List<Match> matches = _matchRepository.GetAllActive();
 
