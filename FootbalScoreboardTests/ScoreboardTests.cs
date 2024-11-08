@@ -51,6 +51,16 @@ public class ScoreboardTests()
     }
 
     [Theory]
+    [InlineData("Mexico", "Canada", 0, 5)]
+    public void UpdateScore_ShouldThrowExceptionIfScoreIsNegativeNumber(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.UpdateScore(homeTeam, awayTeam, homeTeamScore, awayTeamScore));
+        Assert.Equal("Score cannot be negative number.", exception.Message);
+    }
+
+    [Theory]
     [InlineData("Mexico", "Canada")]
     public void FinishMatch_ShouldRemoveMatchFromScoreboard(string homeTeam, string awayTeam)
     {
@@ -65,15 +75,16 @@ public class ScoreboardTests()
     [Fact]
     public void GetMatches_ShouldReturnMatchesOrderedByTotalScoreThenByStartTime()
     {
-        _scoreboard.StartMatch("Mexico", "Canada", DateTime.UtcNow);
+        var matchStartTime = DateTime.UtcNow;
+        _scoreboard.StartMatch("Mexico", "Canada", matchStartTime);
         _scoreboard.UpdateScore("Mexico", "Canada", 0, 5);
-        _scoreboard.StartMatch("Spain", "Brazil", DateTime.UtcNow);
+        _scoreboard.StartMatch("Spain", "Brazil", matchStartTime.AddMinutes(1));
         _scoreboard.UpdateScore("Spain", "Brazil", 10, 2);
-        _scoreboard.StartMatch("Germany", "France", DateTime.UtcNow);
+        _scoreboard.StartMatch("Germany", "France", matchStartTime.AddMinutes(2));
         _scoreboard.UpdateScore("Germany", "France", 2, 2);
-        _scoreboard.StartMatch("Uruguay", "Italy", DateTime.UtcNow);
+        _scoreboard.StartMatch("Uruguay", "Italy", matchStartTime.AddMinutes(3));
         _scoreboard.UpdateScore("Uruguay", "Italy", 6, 6);
-        _scoreboard.StartMatch("Argentina", "Australia", DateTime.UtcNow);
+        _scoreboard.StartMatch("Argentina", "Australia", matchStartTime.AddMinutes(4));
         _scoreboard.UpdateScore("Argentina", "Australia", 3, 1);
 
         List<Match> matches = _scoreboard.GetMatches();
