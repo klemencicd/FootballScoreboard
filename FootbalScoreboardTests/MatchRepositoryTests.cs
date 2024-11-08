@@ -97,4 +97,12 @@ public class MatchRepositoryTests
         Assert.Equal("Germany", matches[4].HomeTeam);
         Assert.Equal("France", matches[4].AwayTeam);
     }
+
+    [Fact]
+    public void GetAllActive_ShouldReturnEmptyList_IfThereAreNoMatches()
+    {
+        List<Match> matches = _matchRepository.GetAllActive();
+
+        Assert.Empty(matches);
+    }
 }
