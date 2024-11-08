@@ -38,5 +38,19 @@ public class MatchRepositoryTests
         Assert.Equal(awayTeam, addeMatch.AwayTeam);
         Assert.Equal(0, addeMatch.AwayTeamScore);
         Assert.Equal(matchStartTime, addeMatch.StartTime);
+        Assert.Equal(match, addeMatch);
+    }
+
+    [Theory]
+    [InlineData("Mexico", "Canada")]
+    public void Remove_ShouldDeleteMatch(string homeTeam, string awayTeam)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+        _matchRepository.Add(match);
+        _matchRepository.Remove(match);
+        List<Match> matches = _matchRepository.GetAllActive();
+
+        Assert.Empty(matches);
     }
 }
