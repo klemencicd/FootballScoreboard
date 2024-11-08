@@ -1,4 +1,5 @@
 ﻿using FootbalScoreboard;
+using FootbalScoreboard.Interfaces;
 using FootbalScoreboard.Repositories;
 
 namespace FootbalScoreboardTests;
@@ -61,5 +62,35 @@ public class MatchRepositoryTests
         List<Match> matches = _matchRepository.GetAllActive();
 
         Assert.Empty(matches);
+    }
+
+    [Fact]
+    public void GetAllActive_ShouldReturnMatchesOrderedByTotalScoreThenByStartTime()
+    {
+        var matchStartTime = DateTime.UtcNow;
+        Match match = new("Mexico", "Canada", matchStartTime);
+        match.UpdateScore(0, 5);
+        _matchRepository.Add(match);
+        match = new("Spain", "Brazil", matchStartTime.AddMinutes(1));
+        match.UpdateScore(10, 2);
+        match = new("Germany", "France", matchStartTime.AddMinutes(2));
+        match.UpdateScore(2, 2);
+        match = new("Uruguay", "Italy", matchStartTime.AddMinutes(3));
+        match.UpdateScore(6, 6);
+        match = new("Argentina", "Australia", matchStartTime.AddMinutes(4));
+        match.UpdateScore(3, 1);
+
+        List<Match> matches = _matchRepository.GetAllActive();
+
+        Assert.Equal("Uruguay", matches[0].HomeTeam);
+        Assert.Equal("Italy", matches[0].AwayTeam);
+        Assert.Equal("Spain", matches[1].HomeTeam);
+        Assert.Equal("Brazil", matches[1].AwayTeam);
+        Assert.Equal("Mexico", matches[2].HomeTeam);
+        Assert.Equal("Canada", matches[2].AwayTeam);
+        Assert.Equal("Argentina", matches[3].HomeTeam);
+        Assert.Equal("Australia", matches[3].AwayTeam);
+        Assert.Equal("Germany", matches[4].HomeTeam);
+        Assert.Equal("France", matches[4].AwayTeam);
     }
 }
