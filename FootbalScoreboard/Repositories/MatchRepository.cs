@@ -7,15 +7,9 @@ internal class MatchRepository : IMatchRepository
 {
     private readonly List<Match> _matches = [];
 
-    public void Add(Match match)
-    {
-        throw new NotImplementedException();
-    }
+    public void Add(Match match) => _matches.Add(match);
 
-    public List<Match> GetAllActive()
-    {
-        throw new NotImplementedException();
-    }
+    public List<Match> GetAllActive() => _matches;
 
     public Match? GetSingle(string homeTeam, string awayTeam)
     {
