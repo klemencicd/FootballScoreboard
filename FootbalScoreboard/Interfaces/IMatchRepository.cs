@@ -1,8 +1,8 @@
 ﻿namespace FootbalScoreboard.Interfaces;
 public interface IMatchRepository
 {
-    void AddMatch(Match match);
-    void RemoveMatch(Match match);
-    Match GetMatch(string homeTeam, string awayTeam);
-    List<Match> GetAllActiveMatches();
+    void Add(Match match);
+    void Remove(Match match);
+    Match? GetSingle(string homeTeam, string awayTeam);
+    List<Match> GetAllActive();
 }
