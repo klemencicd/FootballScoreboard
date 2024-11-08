@@ -39,19 +39,20 @@ public class ScoreboardTests
     }
 
     [Theory]
-    [InlineData("Mexico", "Canada", 0, 5)]
+    [InlineData("Mexico", "Canada", 1, 5)]
     public void UpdateScore_ShouldUpdateMatchScore(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
-        _scoreboard.UpdateScore(homeTeam, awayTeam, homeTeamScore, awayTeamScore);
-        List<Match> matches = _scoreboard.GetMatches();
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+        _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(match);
 
-        Assert.Single(matches);
-        Assert.Equal(homeTeam, matches[0].HomeTeam);
-        Assert.Equal(0, matches[0].HomeTeamScore);
-        Assert.Equal(awayTeam, matches[0].AwayTeam);
-        Assert.Equal(5, matches[0].AwayTeamScore);
+        _scoreboard.UpdateScore(homeTeam, awayTeam, homeTeamScore, awayTeamScore);
+
+        Assert.Equal(homeTeam, match.HomeTeam);
+        Assert.Equal(1, match.HomeTeamScore);
+        Assert.Equal(awayTeam, match.AwayTeam);
+        Assert.Equal(5, match.AwayTeamScore);
     }
 
     [Theory]
