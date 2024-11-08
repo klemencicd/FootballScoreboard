@@ -14,8 +14,5 @@ internal class MatchRepository : IMatchRepository
     public Match? GetSingle(string homeTeam, string awayTeam) => _matches.SingleOrDefault(
         m => m.HomeTeam.Equals(homeTeam) && m.AwayTeam.Equals(awayTeam));
 
-    public void Remove(Match match)
-    {
-        throw new NotImplementedException();
-    }
+    public void Remove(Match match) => _matches.Remove(match);
 }
