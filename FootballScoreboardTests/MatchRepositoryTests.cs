@@ -1,4 +1,4 @@
-﻿using FootballScoreboard;
+﻿using FootballScoreboard.Models;
 using FootballScoreboard.Repositories;
 
 namespace FootballScoreboardTests;

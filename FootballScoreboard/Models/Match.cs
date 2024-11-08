@@ -1,4 +1,4 @@
-﻿namespace FootballScoreboard;
+﻿namespace FootballScoreboard.Models;
 public class Match(string homeTeam, string awayTeam, DateTime startTime)
 {
     public string HomeTeam { get; private set; } = homeTeam;

@@ -1,4 +1,4 @@
-﻿using FootballScoreboard;
+﻿using FootballScoreboard.Models;
 
 namespace FootballScoreboard.Interfaces;
 public interface IScoreboard

@@ -1,8 +1,8 @@
-using FootballScoreboard;
 using FootballScoreboard.Exceptions;
 using FootballScoreboard.Interfaces;
+using FootballScoreboard.Models;
 using Moq;
-using Match = FootballScoreboard.Match;
+using Match = FootballScoreboard.Models.Match;
 
 namespace FootballScoreboardTests;
 

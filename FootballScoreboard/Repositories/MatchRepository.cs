@@ -1,5 +1,5 @@
-﻿using FootballScoreboard;
-using FootballScoreboard.Interfaces;
+﻿using FootballScoreboard.Interfaces;
+using FootballScoreboard.Models;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("FootballScoreboardTests")]
