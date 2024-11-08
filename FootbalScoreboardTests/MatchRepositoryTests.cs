@@ -43,6 +43,15 @@ public class MatchRepositoryTests
 
     [Theory]
     [InlineData("Mexico", "Canada")]
+    public void GetSingle_ShouldReturnNull_WhenMatchDoesNotExist(string homeTeam, string awayTeam)
+    {
+        Match? addeMatch = _matchRepository.GetSingle(homeTeam, awayTeam);
+
+        Assert.Null(addeMatch);
+    }
+
+    [Theory]
+    [InlineData("Mexico", "Canada")]
     public void Remove_ShouldDeleteMatch(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
