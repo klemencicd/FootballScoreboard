@@ -58,12 +58,28 @@ public class ScoreboardTests
 
     [Theory]
     [InlineData("Mexico", "Canada", -1, 5)]
-    public void UpdateScore_ShouldThrowExceptionIfScoreIsNegativeNumber(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
+    public void UpdateScore_ShouldThrowException_WhenHomeTeamScoreIsNegative(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+        _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(match);
+
         var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.UpdateScore(homeTeam, awayTeam, homeTeamScore, awayTeamScore));
-        Assert.Equal("Score cannot be negative number.", exception.Message);
+        Assert.Equal("Match validation failed: Home team score cannot be negative.", exception.Message);
+    }
+
+    [Theory]
+    [InlineData("Mexico", "Canada", 1, -5)]
+    public void UpdateScore_ShouldThrowException_WhenAwayTeamScoreIsNegative(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+        _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(match);
+
+        var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.UpdateScore(homeTeam, awayTeam, homeTeamScore, awayTeamScore));
+        Assert.Equal("Match validation failed: Away team score cannot be negative.", exception.Message);
     }
 
     [Theory]
