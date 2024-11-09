@@ -1,23 +1,19 @@
 ﻿using FootballScoreboard.Interfaces;
 using FootballScoreboard.Exceptions;
-using FootballScoreboard.Models.Validations;
 using FluentValidation.Results;
 
 namespace FootballScoreboard.Models;
 
-public class Scoreboard(IMatchRepository _matchRepository) : IScoreboard
+public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matchValidator) : IScoreboard
 {
     public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {
         Match match = new(homeTeam, awayTeam, matchStartTime);
-
-        MatchValidator validator = new(_matchRepository.GetAllActive());
-        ValidationResult result = validator.Validate(match);
+        ValidationResult result = _matchValidator.ValidateStart(match, _matchRepository.GetAllActive());
 
         if (!result.IsValid)
         {
             var errorMessage = string.Join("; ", result.Errors.Select(error => error.ErrorMessage));
-
             throw new ScoreboardException($"Match validation failed: {errorMessage}");
         }
 
@@ -30,14 +26,11 @@ public class Scoreboard(IMatchRepository _matchRepository) : IScoreboard
         if (match == null) return;
 
         match.UpdateScore(homeTeamScore, awayTeamScore);
-
-        MatchValidator validator = new();
-        ValidationResult result = validator.Validate(match);
+        ValidationResult result = _matchValidator.ValidateScore(match);
 
         if (!result.IsValid)
         {
             var errorMessage = string.Join("; ", result.Errors.Select(error => error.ErrorMessage));
-
             throw new ScoreboardException($"Match validation failed: {errorMessage}");
         }
     }
