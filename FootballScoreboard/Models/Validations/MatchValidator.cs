@@ -29,11 +29,12 @@ internal class MatchValidator : AbstractValidator<Match>, IMatchValidator
 
     public ValidationResult ValidateStart(Match match, List<Match> existingMatches)
     {
-        throw new NotImplementedException();
+        MatchValidator validator = new(existingMatches);
+        return validator.Validate(match);
     }
 
     public ValidationResult ValidateScore(Match match)
     {
-        throw new NotImplementedException();
+        return Validate(match);
     }
 }
