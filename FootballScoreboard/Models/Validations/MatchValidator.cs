@@ -1,7 +1,9 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
+using FootballScoreboard.Interfaces;
 
 namespace FootballScoreboard.Models.Validations;
-internal class MatchValidator : AbstractValidator<Match>
+internal class MatchValidator : AbstractValidator<Match>, IMatchValidator
 {
     public MatchValidator(List<Match>? existingMatches = null)
     {
@@ -23,5 +25,15 @@ internal class MatchValidator : AbstractValidator<Match>
 
         RuleFor(x => x.AwayTeamScore)
             .GreaterThanOrEqualTo(0).WithMessage("Away team score cannot be negative.");
+    }
+
+    public ValidationResult ValidateStart(Match match, List<Match> existingMatches)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ValidationResult ValidateScore(Match match)
+    {
+        throw new NotImplementedException();
     }
 }
