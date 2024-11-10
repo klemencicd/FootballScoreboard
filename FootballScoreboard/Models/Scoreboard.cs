@@ -20,9 +20,9 @@ public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matc
         _matchRepository.Add(match);
     }
 
-    public void UpdateScore(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
+    public void UpdateScore(Ulid id, int homeTeamScore, int awayTeamScore)
     {
-        Match? match = _matchRepository.GetSingle(homeTeam, awayTeam);
+        Match? match = _matchRepository.GetSingle(id);
         if (match == null) return;
 
         match.UpdateScore(homeTeamScore, awayTeamScore);
@@ -35,9 +35,9 @@ public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matc
         }
     }
 
-    public void FinishMatch(string homeTeam, string awayTeam)
+    public void FinishMatch(Ulid id)
     {
-        Match? match = _matchRepository.GetSingle(homeTeam, awayTeam);
+        Match? match = _matchRepository.GetSingle(id);
         if (match != null)
         {
             _matchRepository.Remove(match);

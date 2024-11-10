@@ -17,7 +17,6 @@ public class MatchValidatorTests
         };
 
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
-
         var result = _validator.ValidateStart(match, existingMatches);
 
         Assert.True(result.IsValid);
@@ -30,7 +29,6 @@ public class MatchValidatorTests
     {
         var matchStartTime = DateTime.UtcNow;
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
-
         var result = _validator.ValidateStart(match, []);
 
         Assert.False(result.IsValid);
@@ -44,7 +42,6 @@ public class MatchValidatorTests
     {
         var matchStartTime = DateTime.UtcNow.AddHours(1);
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
-
         var result = _validator.ValidateStart(match, []);
 
         Assert.False(result.IsValid);
@@ -63,7 +60,6 @@ public class MatchValidatorTests
         };
 
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
-
         var result = _validator.ValidateStart(match, existingMatches);
 
         Assert.False(result.IsValid);
@@ -82,7 +78,6 @@ public class MatchValidatorTests
         };
 
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
-
         var result = _validator.ValidateStart(match, existingMatches);
 
         Assert.False(result.IsValid);

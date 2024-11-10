@@ -11,11 +11,13 @@ public class MatchRepositoryTests
     public void Add_ShouldStartNewMatch_WithInitialScoreZero(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
+        Ulid id = Ulid.NewUlid();
+        Match match = new(id, homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         List<Match> matches = _matchRepository.GetAllActive();
 
         Assert.Single(matches);
+        Assert.Equal(id, matches[0].Id);
         Assert.Equal(homeTeam, matches[0].HomeTeam);
         Assert.Equal(0, matches[0].HomeTeamScore);
         Assert.Equal(awayTeam, matches[0].AwayTeam);
@@ -31,9 +33,10 @@ public class MatchRepositoryTests
         Ulid id = Ulid.NewUlid();
         Match match = new(id, homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
-        Match? addeMatch = _matchRepository.GetSingle(homeTeam, awayTeam);
+        Match? addeMatch = _matchRepository.GetSingle(id);
 
         Assert.NotNull(addeMatch);
+        Assert.Equal(id, addeMatch.Id);
         Assert.Equal(homeTeam, addeMatch.HomeTeam);
         Assert.Equal(0, addeMatch.HomeTeamScore);
         Assert.Equal(awayTeam, addeMatch.AwayTeam);
@@ -42,12 +45,10 @@ public class MatchRepositoryTests
         Assert.Equal(match, addeMatch);
     }
 
-    [Theory]
-    [InlineData("Mexico", "Canada")]
-    public void GetSingle_ShouldReturnNull_WhenMatchDoesNotExist(string homeTeam, string awayTeam)
+    [Fact]
+    public void GetSingle_ShouldReturnNull_WhenMatchDoesNotExist()
     {
-        Match? addeMatch = _matchRepository.GetSingle(homeTeam, awayTeam);
-
+        Match? addeMatch = _matchRepository.GetSingle(Ulid.NewUlid());
         Assert.Null(addeMatch);
     }
 
@@ -56,8 +57,7 @@ public class MatchRepositoryTests
     public void Remove_ShouldDeleteMatch(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Ulid id = Ulid.NewUlid();
-        Match match = new(id, homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         _matchRepository.Remove(match);
         List<Match> matches = _matchRepository.GetAllActive();
@@ -103,7 +103,6 @@ public class MatchRepositoryTests
     public void GetAllActive_ShouldReturnEmptyList_IfNoMatches()
     {
         List<Match> matches = _matchRepository.GetAllActive();
-
         Assert.Empty(matches);
     }
 }
