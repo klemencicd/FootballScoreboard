@@ -43,7 +43,7 @@ public class ScoreboardTests
         ];
         _matchValidatorMock.Setup(x => x.ValidateStart(It.IsAny<Match>(), It.IsAny<List<Match>>()))
             .Returns(new ValidationResult(failure));
-        _matchRepositoryMock.Setup(x => x.GetAllActive()).Returns([new Match("Mexico", "Canada", matchStartTime)]);
+        _matchRepositoryMock.Setup(x => x.GetAllActive()).Returns([new Match(Ulid.NewUlid(), "Mexico", "Canada", matchStartTime)]);
         var exception = Assert.Throws<ScoreboardException>(() => _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime));
         Assert.Equal("Match validation failed: Team Mexico is already in a match.", exception.Message);
         _matchValidatorMock.Verify(r => r.ValidateStart(It.IsAny<Match>(), It.IsAny<List<Match>>()), Times.Once);
@@ -55,7 +55,7 @@ public class ScoreboardTests
     public void UpdateScore_ShouldUpdateMatchScore(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
             .Returns(match);
         _matchValidatorMock.Setup(x => x.ValidateScore(It.IsAny<Match>()))
@@ -76,7 +76,7 @@ public class ScoreboardTests
     public void UpdateScore_ShouldThrowException_WhenHomeTeamScoreIsNegative(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
             .Returns(match);
 
@@ -98,7 +98,7 @@ public class ScoreboardTests
     public void UpdateScore_ShouldThrowException_WhenAwayTeamScoreIsNegative(string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
             .Returns(match);
 
@@ -120,7 +120,7 @@ public class ScoreboardTests
     public void FinishMatch_ShouldRemoveMatchFromScoreboard(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepositoryMock.Setup(x => x.GetSingle(It.IsAny<string>(), It.IsAny<string>()))
             .Returns(match);
         _scoreboard.FinishMatch(homeTeam, awayTeam);

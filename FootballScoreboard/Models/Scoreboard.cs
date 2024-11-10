@@ -8,7 +8,7 @@ public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matc
 {
     public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         ValidationResult result = _matchValidator.ValidateStart(match, _matchRepository.GetAllActive());
 
         if (!result.IsValid)

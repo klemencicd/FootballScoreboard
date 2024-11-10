@@ -13,10 +13,10 @@ public class MatchValidatorTests
         var matchStartTime = DateTime.UtcNow;
         var existingMatches = new List<Match>
         {
-            new("Spain", "Brazil", matchStartTime)
+            new(Ulid.NewUlid(), "Spain", "Brazil", matchStartTime)
         };
 
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, existingMatches);
 
@@ -29,7 +29,7 @@ public class MatchValidatorTests
     public void ValidateStart_WithSameHomeAndAwayTeam_ReturnsError(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, []);
 
@@ -43,7 +43,7 @@ public class MatchValidatorTests
     public void ValidateStart_WithMatchTimeInTheFuture_ReturnsError(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow.AddHours(1);
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, []);
 
@@ -59,10 +59,10 @@ public class MatchValidatorTests
         var matchStartTime = DateTime.UtcNow;
         var existingMatches = new List<Match>
         {
-            new(homeTeam, "Brazil", matchStartTime)
+            new(Ulid.NewUlid(), homeTeam, "Brazil", matchStartTime)
         };
 
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, existingMatches);
 
@@ -78,10 +78,10 @@ public class MatchValidatorTests
         var matchStartTime = DateTime.UtcNow;
         var existingMatches = new List<Match>
         {
-            new("Brazil", awayTeam, matchStartTime)
+            new(Ulid.NewUlid(), "Brazil", awayTeam, matchStartTime)
         };
 
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, existingMatches);
 
@@ -95,7 +95,7 @@ public class MatchValidatorTests
     public void ValidateStart_WithEmptyHomeTeam_ReturnsError(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, []);
 
@@ -109,7 +109,7 @@ public class MatchValidatorTests
     public void ValidateStart_WithEmptyAwayTeam_ReturnsError(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
 
         var result = _validator.ValidateStart(match, []);
 
@@ -124,7 +124,7 @@ public class MatchValidatorTests
         string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         match.UpdateScore(homeTeamScore, awayTeamScore);
         var result = _validator.ValidateStart(match, []);
 
@@ -138,7 +138,7 @@ public class MatchValidatorTests
         string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         match.UpdateScore(homeTeamScore, awayTeamScore);
         var result = _validator.ValidateStart(match, []);
 
@@ -153,7 +153,7 @@ public class MatchValidatorTests
         string homeTeam, string awayTeam, int homeTeamScore, int awayTeamScore)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         match.UpdateScore(homeTeamScore, awayTeamScore);
         var result = _validator.ValidateStart(match, []);
 

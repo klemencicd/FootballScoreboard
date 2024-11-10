@@ -11,7 +11,7 @@ public class MatchRepositoryTests
     public void Add_ShouldStartNewMatch_WithInitialScoreZero(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         List<Match> matches = _matchRepository.GetAllActive();
 
@@ -28,7 +28,8 @@ public class MatchRepositoryTests
     public void GetSingle_ShouldReturnCorrectMatch(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Ulid id = Ulid.NewUlid();
+        Match match = new(id, homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         Match? addeMatch = _matchRepository.GetSingle(homeTeam, awayTeam);
 
@@ -55,7 +56,8 @@ public class MatchRepositoryTests
     public void Remove_ShouldDeleteMatch(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new(homeTeam, awayTeam, matchStartTime);
+        Ulid id = Ulid.NewUlid();
+        Match match = new(id, homeTeam, awayTeam, matchStartTime);
         _matchRepository.Add(match);
         _matchRepository.Remove(match);
         List<Match> matches = _matchRepository.GetAllActive();
@@ -67,19 +69,19 @@ public class MatchRepositoryTests
     public void GetAllActive_ShouldReturnMatchesOrderedByTotalScoreThenByStartTime()
     {
         var matchStartTime = DateTime.UtcNow;
-        Match match = new("Mexico", "Canada", matchStartTime);
+        Match match = new(Ulid.NewUlid(), "Mexico", "Canada", matchStartTime);
         match.UpdateScore(0, 5);
         _matchRepository.Add(match);
-        match = new("Spain", "Brazil", matchStartTime.AddMinutes(1));
+        match = new(Ulid.NewUlid(), "Spain", "Brazil", matchStartTime.AddMinutes(1));
         match.UpdateScore(10, 2);
         _matchRepository.Add(match);
-        match = new("Germany", "France", matchStartTime.AddMinutes(2));
+        match = new(Ulid.NewUlid(), "Germany", "France", matchStartTime.AddMinutes(2));
         match.UpdateScore(2, 2);
         _matchRepository.Add(match);
-        match = new("Uruguay", "Italy", matchStartTime.AddMinutes(3));
+        match = new(Ulid.NewUlid(), "Uruguay", "Italy", matchStartTime.AddMinutes(3));
         match.UpdateScore(6, 6);
         _matchRepository.Add(match);
-        match = new("Argentina", "Australia", matchStartTime.AddMinutes(4));
+        match = new(Ulid.NewUlid(), "Argentina", "Australia", matchStartTime.AddMinutes(4));
         match.UpdateScore(3, 1);
         _matchRepository.Add(match);
 

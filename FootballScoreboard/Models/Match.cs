@@ -1,6 +1,7 @@
 ﻿namespace FootballScoreboard.Models;
-public class Match(string homeTeam, string awayTeam, DateTime startTime)
+public class Match(Ulid id, string homeTeam, string awayTeam, DateTime startTime)
 {
+    public Ulid Id { get; set; } = id;
     public string HomeTeam { get; private set; } = homeTeam;
     public string AwayTeam { get; private set; } = awayTeam;
     public int HomeTeamScore { get; private set; } = 0;
