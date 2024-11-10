@@ -25,6 +25,34 @@ public class MatchValidatorTests
     }
 
     [Theory]
+    [InlineData("Mexico", "Mexico")]
+    public void ValidateStart_WithSameHomeAndAwayTeam_ReturnsError(string homeTeam, string awayTeam)
+    {
+        var matchStartTime = DateTime.UtcNow;
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+
+        var result = _validator.ValidateStart(match, []);
+
+        Assert.False(result.IsValid);
+        Assert.Single(result.Errors);
+        Assert.Equal("Home team and away team must be different.", result.Errors[0].ErrorMessage);
+    }
+
+    [Theory]
+    [InlineData("Mexico", "Mexico")]
+    public void ValidateStart_WithMatchTimeInTheFuture_ReturnsError(string homeTeam, string awayTeam)
+    {
+        var matchStartTime = DateTime.UtcNow.AddHours(1);
+        Match match = new(homeTeam, awayTeam, matchStartTime);
+
+        var result = _validator.ValidateStart(match, []);
+
+        Assert.False(result.IsValid);
+        Assert.Single(result.Errors);
+        Assert.Equal("Home team and away team must be different.", result.Errors[0].ErrorMessage);
+    }
+
+    [Theory]
     [InlineData("Mexico", "Canada")]
     public void ValidateStart_WithExistingMatch_ReturnsErrorForHomeTeamInMatch(string homeTeam, string awayTeam)
     {
