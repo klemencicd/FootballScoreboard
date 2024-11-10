@@ -6,7 +6,7 @@ namespace FootballScoreboard.Models;
 
 public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matchValidator) : IScoreboard
 {
-    public void StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
+    public Ulid StartMatch(string homeTeam, string awayTeam, DateTime matchStartTime)
     {
         Match match = new(Ulid.NewUlid(), homeTeam, awayTeam, matchStartTime);
         ValidationResult result = _matchValidator.ValidateStart(match, _matchRepository.GetAllActive());
@@ -18,6 +18,7 @@ public class Scoreboard(IMatchRepository _matchRepository, IMatchValidator _matc
         }
 
         _matchRepository.Add(match);
+        return match.Id;
     }
 
     public void UpdateScore(Ulid id, int homeTeamScore, int awayTeamScore)
