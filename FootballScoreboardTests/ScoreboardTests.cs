@@ -26,9 +26,9 @@ public class ScoreboardTests
         _matchRepositoryMock.Setup(x => x.GetAllActive()).Returns([]);
 
         var matchStartTime = DateTime.UtcNow;
-        Ulid? id = _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
+        Ulid id = _scoreboard.StartMatch(homeTeam, awayTeam, matchStartTime);
 
-        Assert.NotNull(id);
+        Assert.NotEqual(Ulid.Empty, id);
         _matchValidatorMock.Verify(r => r.ValidateStart(It.IsAny<Match>(), It.IsAny<List<Match>>()), Times.Once);
         _matchRepositoryMock.Verify(r => r.Add(It.Is<Match>(m => m.HomeTeam == homeTeam && m.AwayTeam == awayTeam)), Times.Once);
     }
