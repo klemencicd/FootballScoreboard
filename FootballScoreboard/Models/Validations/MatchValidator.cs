@@ -7,15 +7,26 @@ internal class MatchValidator : AbstractValidator<Match>, IMatchValidator
 {
     public MatchValidator(List<Match>? existingMatches = null)
     {
+        RuleFor(x => x)
+            .Must(match => match.HomeTeam != match.AwayTeam)
+            .WithMessage("Home team and away team must be different.");
+
+        RuleFor(x => x.StartTime)
+            .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Match start time cannot be in the future.");
+
+        RuleFor(x => x.HomeTeam)
+            .NotEmpty().WithMessage("Home team cannot be empty.");
+
+        RuleFor(x => x.AwayTeam)
+            .NotEmpty().WithMessage("Away team cannot be empty.");
+
         if (existingMatches != null)
         {
             RuleFor(x => x.HomeTeam)
-                .NotEmpty().WithMessage("Home team cannot be empty.")
                 .Must((match, homeTeam) => !existingMatches.Any(m => m.HomeTeam == homeTeam || m.AwayTeam == homeTeam))
                 .WithMessage(match => $"Team {match.HomeTeam} is already in a match.");
 
             RuleFor(x => x.AwayTeam)
-                .NotEmpty().WithMessage("Away team cannot be empty.")
                 .Must((match, awayTeam) => !existingMatches.Any(m => m.HomeTeam == awayTeam || m.AwayTeam == awayTeam))
                 .WithMessage(match => $"Team {match.AwayTeam} is already in a match.");
         }

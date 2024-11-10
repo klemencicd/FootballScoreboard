@@ -39,7 +39,7 @@ public class MatchValidatorTests
     }
 
     [Theory]
-    [InlineData("Mexico", "Mexico")]
+    [InlineData("Mexico", "Canada")]
     public void ValidateStart_WithMatchTimeInTheFuture_ReturnsError(string homeTeam, string awayTeam)
     {
         var matchStartTime = DateTime.UtcNow.AddHours(1);
@@ -49,7 +49,7 @@ public class MatchValidatorTests
 
         Assert.False(result.IsValid);
         Assert.Single(result.Errors);
-        Assert.Equal("Home team and away team must be different.", result.Errors[0].ErrorMessage);
+        Assert.Equal("Match start time cannot be in the future.", result.Errors[0].ErrorMessage);
     }
 
     [Theory]
