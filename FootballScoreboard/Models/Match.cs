@@ -7,6 +7,7 @@ public class Match(Ulid id, string homeTeam, string awayTeam, DateTime startTime
     public int HomeTeamScore { get; private set; } = 0;
     public int AwayTeamScore { get; private set; } = 0;
     public DateTime StartTime { get; private set; } = startTime;
+    public int TotalScore => HomeTeamScore + AwayTeamScore;
 
     internal void UpdateScore(int homeTeamScore, int awayTeamScore)
     {

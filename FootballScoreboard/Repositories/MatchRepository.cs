@@ -11,7 +11,7 @@ internal class MatchRepository : IMatchRepository
     public void Add(Match match) => _matches.Add(match);
 
     public List<Match> GetAllActive() => [.. _matches
-        .OrderByDescending(x => x.HomeTeamScore + x.AwayTeamScore)
+        .OrderByDescending(x => x.TotalScore)
         .ThenByDescending(x => x.StartTime)];
 
     public Match? GetSingle(Ulid id) => 
